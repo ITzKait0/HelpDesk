@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "API_Gateway.Controllers";
+
+package kunde;
+
+import "Grpcs/Protos/GeneralProtos.proto";
+
+service KundenVerwaltungsService{
+	rpc AddKunde(pAddKundeRequest) returns (generalProtos.pBoolReply);
+	rpc DeleteKunde(pDeleteKundeRequest) returns (generalProtos.pBoolReply);
+}
+
+message pAddKundeRequest{
+	generalProtos.pKunde kunde = 1;
+}
+
+message pDeleteKundeRequest{
+	int32 id = 1;
+}

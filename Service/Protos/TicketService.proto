@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "Service.Protos";
+
+package ticket;
+
+import "Protos/GeneralProtos.proto";
+
+service TicketVerwaltungsService{
+	rpc AddTicket(pAddTicketRequest) returns (generalProtos.pBoolReply);
+	rpc DeleteTicket(pDeleteTicketRequest) returns (generalProtos.pBoolReply);
+}
+
+message pAddTicketRequest{
+	generalProtos.pTicket ticket = 1;
+}
+
+message pDeleteTicketRequest{
+	int32 id = 1;
+}
+

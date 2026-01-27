@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option csharp_namespace = "Service.Protos";
+
+package generalProtos;
+
+message pBoolReply{
+	bool result = 1;
+}
+
+message pKunde{
+	int32 id = 1;
+	string name = 2;
+	string vorname = 3;
+	string tel = 4;
+	string adresse = 5;
+	int32 plz = 6;
+}
+
+message pTicket{
+	int32 id = 1;
+	int32 kundenId = 2;
+	string topic = 3;
+	string text = 4;
+	pPriority prioritaet = 5;
+}
+
+enum pPriority{
+	NON_VALUE = 0;
+	SEHR_NIEDRIG = 1;
+	NIEDRIG = 2;
+	MITTEL = 3;
+	HOCH = 4;
+	SEHR_HOCH = 5;
+}
