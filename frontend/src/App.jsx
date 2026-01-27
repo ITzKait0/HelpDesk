@@ -4,25 +4,6 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 
-class Kunde {
-    constructor(name, vorname, tel, adresse, plz) {
-        this.name = name;
-        this.vorname = vorname;
-        this.tel = tel;
-        this.adresse = adresse;
-        this.plz = plz;
-    }
-}
-
-class Ticket {
-    constructor(name, firstname, email, topic, text) {
-        this.name = name;
-        this.firstname = firstname;
-        this.email = email;
-        this.topic = topic;
-        this.text = text;
-    }
-}
 function App() {
     const [status, setStatus] = useState("idle");
     const addTicket = async (ticket)=>{
@@ -52,10 +33,10 @@ function App() {
           text: document.getElementById("textfield").value};
           try {
             await addTicket(ticket);
-            setStatus("success"); // ✅ nach Erfolg
+            setStatus("success");
           } catch (e) {
             console.error(e);
-            setStatus("idle"); // oder "error"
+            setStatus("idle");
           }
     }
   return (
