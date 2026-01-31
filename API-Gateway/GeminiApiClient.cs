@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace API_Gateway;
+namespace API_Gateway;  
 public class GeminiApiClient
 {
     public static async Task<string> Do(string text)

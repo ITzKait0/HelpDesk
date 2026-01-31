@@ -19,7 +19,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
     <ItemGroup>
-	    <Protobuf Include="Grpcs\Protos\KundenService.proto" GrpcServices="Client" />
 		<Protobuf Include="Grpcs\Protos\GeneralProtos.proto" GrpcServices="Client" />
 	    <Protobuf Include="Grpcs\Protos\TicketService.proto" GrpcServices="Client" />
     </ItemGroup>

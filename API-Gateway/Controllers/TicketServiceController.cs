@@ -22,10 +22,15 @@ namespace API_Gateway.Controllers
             {
                 Ticket = new pTicket()
                 {
-                    KundenId = 1,
-                    Prioritaet = 0,//(pPriority)Convert.ToInt32((await GeminiApiClient.Do(text))[0]),
+                    Id = 0,
+                    Ticketnr = 0,
+                    Name = ticketDto.name,
+                    Firstname = ticketDto.firstname,
+                    Email = ticketDto.email,
+                    Priority = Priority.NON_VALUE.ToString(),//(pPriority)Convert.ToInt32((await GeminiApiClient.Do(text))[0]),
                     Text = ticketDto.text,
-                    Topic = ticketDto.topic
+                    Topic = ticketDto.topic,
+                    Supporterid = 0,
                 }
             };
 

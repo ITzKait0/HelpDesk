@@ -6,12 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
-	<Protobuf Include="Protos\KundenService.proto" GrpcServices="Server" />
 	<Protobuf Include="Protos\SupporterService.proto" GrpcServices="Server" />
 	<Protobuf Include="Protos\AccountService.proto" GrpcServices="Server" />
 	<Protobuf Include="Protos\TicketService.proto" GrpcServices="Server" />
-	<Protobuf Include="Protos\GeneralProtos.proto" GrpcServices="Server"/>
+	<Protobuf Include="Protos\GeneralProtos.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>

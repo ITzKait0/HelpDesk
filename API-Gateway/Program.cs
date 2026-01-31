@@ -1,7 +1,6 @@
 using Grpc;
 using API_Gateway.Controllers;
 using System.Security.Cryptography.Xml;
-using API_Gateway.Grpcs.grpcs;
 public class Program
 {
     private static void Main(string[] args)
@@ -18,11 +17,6 @@ public class Program
         });
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
-        builder.Services.AddGrpcClient<KundenVerwaltungsService.KundenVerwaltungsServiceClient>(o =>
-        {
-            o.Address = new Uri("https://localhost:5002");
-        });
 
         builder.Services.AddGrpcClient<TicketVerwaltungsService.TicketVerwaltungsServiceClient>(o =>
         {

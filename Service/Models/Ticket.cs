@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace Service.Models;
 
 public partial class Ticket
 {
-    [Key]
-    [Column("ID")]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
-    [StringLength(200)]
-    public string Titel { get; set; } = null!;
+    public long TicketNr { get; set; }
 
-    public string Inhalt { get; set; } = null!;
+    public string Topic { get; set; } = null!;
 
-    public int? Prioritaet { get; set; }
+    public string Name { get; set; } = null!;
 
-    [Column("Kunden_ID")]
-    public int KundenId { get; set; }
+    public string Firstname { get; set; } = null!;
 
-    [ForeignKey("KundenId")]
-    [InverseProperty("Tickets")]
-    public virtual Kunden Kunden { get; set; } = null!;
+    public string Email { get; set; } = null!;
+
+    public int Priority { get; set; }
+
+    public string Text { get; set; } = null!;
+
+    public int? SupporterId { get; set; }
+
+    public DateTime Created { get; set; }
+
+    public virtual Supporter? Supporter { get; set; }
 }
