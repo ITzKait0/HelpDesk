@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace API_Gateway.Controllers
 {
@@ -17,6 +18,7 @@ namespace API_Gateway.Controllers
         [Route("add")]
         public async Task<bool> addTicket([FromBody] TicketDto ticketDto)
         {
+            Tuple<int, string> geminiApiEvaluationRequest = await GeminiApiClient.Do(ticketDto.text);
 
             pAddTicketRequest request = new pAddTicketRequest()
             {
@@ -27,7 +29,7 @@ namespace API_Gateway.Controllers
                     Name = ticketDto.name,
                     Firstname = ticketDto.firstname,
                     Email = ticketDto.email,
-                    Priority = Priority.NON_VALUE.ToString(),//(pPriority)Convert.ToInt32((await GeminiApiClient.Do(text))[0]),
+                    Priority = ((pPriority)(geminiApiEvaluationRequest.Item1)).ToString(),//(pPriority)Convert.ToInt32((await GeminiApiClient.Do(text))[0]),
                     Text = ticketDto.text,
                     Topic = ticketDto.topic,
                     Supporterid = 0,
