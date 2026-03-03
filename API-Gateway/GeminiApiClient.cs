@@ -10,8 +10,8 @@ public class GeminiApiClient
 {
     public static async Task<Tuple<int,string>> Do(string text)
     {
-        var apiKey = "AIzaSyCBWyDt7BnXEqMkusXNnMlCe9iAYjISkIk";
-        var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={apiKey}";
+        string apiKey = File.ReadAllLines("GEMINI_API_KEY.txt")[0];
+        string url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key={apiKey}";
         var requestBody = new
         {
             contents = new[]
@@ -25,13 +25,14 @@ public class GeminiApiClient
                 }
             }
         };
-
+        
         var json = JsonSerializer.Serialize(requestBody);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 
         using var client = new HttpClient();
         var response = await client.PostAsync(url, content);
+        Console.WriteLine(await response.Content.ReadAsStringAsync());
         GeminiResponseDto.Rootobject geminiResponseDto = JsonSerializer.Deserialize<GeminiResponseDto.Rootobject>(response.Content.ReadAsStreamAsync().Result);
         string[]responseText = geminiResponseDto?
             .candidates
@@ -41,8 +42,8 @@ public class GeminiApiClient
             .FirstOrDefault()?
             .text
             .Split("||");
-
-        return new Tuple<int,string>(Convert.ToInt32(responseText[0]), responseText[1]);
+        Console.WriteLine("GEMINI EVAL:" + responseText[0]);
+        return new Tuple<int,string>(Convert.ToInt32(responseText[0].ToString()), responseText[1]);
     }
 }
 

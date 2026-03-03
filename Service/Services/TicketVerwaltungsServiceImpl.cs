@@ -25,11 +25,11 @@ namespace Service.Services
                 Name = ticket.Name,
                 Firstname = ticket.Firstname,
                 Email = ticket.Email,
-                Priority = 0,
+                Priority = (int)ticket.Priority,
                 SupporterId = 1,
                 Topic = ticket.Topic,
                 Text = ticket.Text,
-                Created = DateTime.Now,
+                Created = DateTime.Now
             });
             await _context.SaveChangesAsync();
 

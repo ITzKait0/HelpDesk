@@ -19,11 +19,9 @@ namespace API_Gateway.Controllers
         public async Task<bool> addTicket([FromBody] TicketDto ticketDto)
         {
             Tuple<int, string> geminiApiEvaluationRequest = await GeminiApiClient.Do(ticketDto.text);
-
-            pAddTicketRequest request = new pAddTicketRequest()
-            {
-                Ticket = new pTicket()
-                {
+            Console.WriteLine("GEMINI CONTROLLER RESULT:" + geminiApiEvaluationRequest.Item1);
+            pAddTicketRequest request = new pAddTicketRequest() {
+                Ticket = new pTicket() {
                     Id = 0,
                     Ticketnr = 0,
                     Name = ticketDto.name,
