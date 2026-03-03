@@ -29,7 +29,7 @@ namespace API_Gateway.Controllers
                     Name = ticketDto.name,
                     Firstname = ticketDto.firstname,
                     Email = ticketDto.email,
-                    Priority = ((pPriority)(geminiApiEvaluationRequest.Item1)).ToString(),//(pPriority)Convert.ToInt32((await GeminiApiClient.Do(text))[0]),
+                    Priority = (pPriority)geminiApiEvaluationRequest.Item1,//(pPriority)Convert.ToInt32((await GeminiApiClient.Do(text))[0]),
                     Text = ticketDto.text,
                     Topic = ticketDto.topic,
                     Supporterid = 0,

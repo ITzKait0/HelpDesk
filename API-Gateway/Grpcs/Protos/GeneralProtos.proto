@@ -15,7 +15,7 @@ message pTicket{
 	string name = 4;
 	string firstname = 5;
 	string email = 6;
-	string priority = 7;
+	pPriority priority = 7;
 	string text = 8;
 	int32 supporterid = 9;
 }
