@@ -20,10 +20,6 @@ import IconButton from '@mui/material/IconButton';
 function App() {
     const [status, setStatus] = useState("idle");
     const addTicket = async (ticket)=>{
-        console.log(
-  "VALUE:",
-  ticket
-);
         await fetch("http://localhost:5003/Ticket/add", {
             method: "POST",
             headers: {
@@ -37,10 +33,6 @@ const handleChange = (e) => {
   };
     const createTicket = async()=>{
         setStatus("pending");
-        console.log(
-  "TEXTFIELD VALUE:",
-  document.getElementById("textfield")?.value
-);
         const ticket = {name:document.getElementById("name").value,
           firstname: document.getElementById("firstname").value,
           email: document.getElementById("email").value,
