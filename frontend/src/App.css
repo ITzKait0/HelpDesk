@@ -17,7 +17,14 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
 
+body {
+  background: linear-gradient(180deg, #1e1e1e, #e0e0e0);
+}
 .ticketinput{
   display: flex;
   flex-direction: column;
