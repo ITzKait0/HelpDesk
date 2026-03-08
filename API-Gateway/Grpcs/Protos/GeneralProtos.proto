@@ -1,5 +1,5 @@
 syntax = "proto3";
-
+import "google/protobuf/wrappers.proto";
 option csharp_namespace = "API_Gateway.Controllers";
 
 package generalProtos;
@@ -9,15 +9,16 @@ message pBoolReply{
 }
 
 message pTicket{
-	int32 id = 1;
-	int32 ticketnr = 2;
+	int64 id = 1;
+	int64 ticketnr = 2;
 	string topic = 3;
 	string name = 4;
 	string firstname = 5;
 	string email = 6;
 	pPriority priority = 7;
 	string text = 8;
-	int32 supporterid = 9;
+	google.protobuf.Int32Value supporterid = 9;
+	string created = 10;
 }
 
 enum pPriority{

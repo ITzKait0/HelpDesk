@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API_Gateway.Mail;
+using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 
 namespace API_Gateway.Controllers
@@ -8,10 +9,12 @@ namespace API_Gateway.Controllers
     public class TicketServiceController : Controller
     {
         private readonly TicketVerwaltungsService.TicketVerwaltungsServiceClient _ticketVerwaltungsServiceClient;
+        private readonly GmailConnection _gmailConnection;
 
-        public TicketServiceController(TicketVerwaltungsService.TicketVerwaltungsServiceClient ticketVerwaltungsServiceClient)
+        public TicketServiceController(TicketVerwaltungsService.TicketVerwaltungsServiceClient ticketVerwaltungsServiceClient, GmailConnection gmailConnection)
         {
             _ticketVerwaltungsServiceClient=ticketVerwaltungsServiceClient;
+            _gmailConnection=gmailConnection;
         }
 
         [HttpPost]
@@ -34,10 +37,29 @@ namespace API_Gateway.Controllers
                 }
             };
 
-            pBoolReply reply = await _ticketVerwaltungsServiceClient.AddTicketAsync(request);
-            return reply.Result;
+            pAddTicketReply reply = await _ticketVerwaltungsServiceClient.AddTicketAsync(request);
+            await _gmailConnection.SendAsync(ticketDto.email, $"Ticket: {ticketDto.topic};{reply.Id}", $"Guten Tag, \n ihre TicketNr: {reply.Id} \n bitte bei weiterem Email Verkehr immer auf diese Emails antworten und den Betreff nicht ändern. \n Mit freundlichen Grüßen \n Ihre F.H.P Enterprise Estates");
+            return true;
         }
 
+        [HttpGet]
+        [Route("byId/{id}")]
+        public async Task<pTicket> getTicketById(long id)
+        {
+            pGetTicketByIdRequest request = new pGetTicketByIdRequest() { Id = id };
+            pGetTicketByIdReply reply = await _ticketVerwaltungsServiceClient.GetTicketByIdAsync(request);
+            return reply.Ticket;
+        }
+
+        [HttpGet]
+        [Route("bySupporterId/{supporterId}")]
+        public async Task<List<pTicket>> getTicketsBySupporterId(int supporterId)
+        {
+            pGetTicketsBySupporterIdRequest request = new pGetTicketsBySupporterIdRequest() { SupporterId = supporterId };
+            pGetTicketsBySupporterIdReply reply = await _ticketVerwaltungsServiceClient.GetTicketsBySupporterIdAsync(request);
+            return reply.Tickets.ToList();
+        }
+        
         public class TicketDto
         {
             public string name { get; set; }

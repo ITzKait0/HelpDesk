@@ -5,7 +5,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>API_Gateway</RootNamespace>
+    <UserSecretsId>82756b13-25dd-41d6-a0ee-05cb81fcaeef</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Grpcs\Protos\MailService.proto" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Protobuf" Version="3.33.3" />
@@ -16,11 +21,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="MailKit" Version="4.15.1" />
+    <PackageReference Include="MimeKit" Version="4.15.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
     <ItemGroup>
 		<Protobuf Include="Grpcs\Protos\GeneralProtos.proto" GrpcServices="Client" />
 	    <Protobuf Include="Grpcs\Protos\TicketService.proto" GrpcServices="Client" />
+		<Protobuf Include="Grpcs\Protos\MailService.proto" GrpcServices="Client"/>
     </ItemGroup>
 
 

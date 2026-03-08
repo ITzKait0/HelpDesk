@@ -14,12 +14,12 @@ namespace Service.Services
         {
             _context=context;
         }
-    
-        public override async Task<pBoolReply> AddTicket(pAddTicketRequest request, ServerCallContext context)
+
+        public override async Task<pAddTicketReply> AddTicket(pAddTicketRequest request, ServerCallContext context)
         {
             pTicket ticket = request.Ticket;
 
-            _context.Tickets.Add(new Ticket()
+            Ticket ticketEntity = new Ticket()
             {
                 TicketNr = 0,
                 Name = ticket.Name,
@@ -30,20 +30,69 @@ namespace Service.Services
                 Topic = ticket.Topic,
                 Text = ticket.Text,
                 Created = DateTime.Now
-            });
+            };
+            await _context.Tickets.AddAsync(ticketEntity);
             await _context.SaveChangesAsync();
 
-            return new pBoolReply() { Result = true };
+            return new pAddTicketReply() { Id = ticketEntity.Id };
         }
-    }
 
-    public enum Priority
-    {
-        NON_VALUE = 0,
-        SEHR_NIEDRIG = 1,
-        NIEDRIG = 2,
-        MITTEL = 3,
-        HOCH = 4,
-        SEHR_HOCH = 5
+        public override async Task<pGetTicketsBySupporterIdReply> GetTicketsBySupporterId(pGetTicketsBySupporterIdRequest request, ServerCallContext context)
+        {
+            if (request.SupporterId != 0)
+            {
+                return new pGetTicketsBySupporterIdReply()
+                {
+                    Tickets = { await _context.Tickets.Where(t => t.SupporterId == request.SupporterId).Select(t => new pTicket()
+                    {
+                        Id = t.Id,
+                        Ticketnr = t.TicketNr,
+                        Name = t.Name,
+                        Firstname = t.Firstname,
+                        Email = t.Email,
+                        Priority = (pPriority)t.Priority,
+                        Supporterid = t.SupporterId.Value,
+                        Topic = t.Topic,
+                        Text = t.Text,
+                        Created = t.Created.ToString()
+                    }).ToListAsync() }
+                };
+            }
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "SupporterId must be provided and not 0"));
+        }
+
+        public override async Task<pGetTicketByIdReply> GetTicketById(pGetTicketByIdRequest request, ServerCallContext context)
+        {
+            if (request.Id != 0)
+            {
+                return new pGetTicketByIdReply()
+                {
+                    Ticket = await _context.Tickets.Where(t => t.Id == request.Id).Select(t => new pTicket()
+                    {
+                        Id = t.Id,
+                        Ticketnr = t.TicketNr,
+                        Name = t.Name,
+                        Firstname = t.Firstname,
+                        Email = t.Email,
+                        Priority = (pPriority)t.Priority,
+                        Supporterid = t.SupporterId.Value,
+                        Topic = t.Topic,
+                        Text = t.Text,
+                        Created = t.Created.ToString()
+                    }).FirstOrDefaultAsync()
+                };
+            }
+            throw new RpcException(new Status(StatusCode.InvalidArgument, "Id must be provided and not 0"));
+        }
+
+        public enum Priority
+        {
+            NON_VALUE = 0,
+            SEHR_NIEDRIG = 1,
+            NIEDRIG = 2,
+            MITTEL = 3,
+            HOCH = 4,
+            SEHR_HOCH = 5
+        }
     }
 }

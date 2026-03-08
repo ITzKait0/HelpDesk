@@ -1,11 +1,15 @@
 using Grpc;
 using API_Gateway.Controllers;
 using System.Security.Cryptography.Xml;
+using API_Gateway.Mail;
 public class Program
 {
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.Configure<MailSettings>(
+            builder.Configuration.GetSection("Mail"));
 
         // Add services to the container.
 
@@ -15,10 +19,19 @@ public class Program
         {
             options.ListenAnyIP(5003);
         });
+
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddScoped<GmailConnection>();
+        builder.Services.AddHostedService<GmailPollingService>();
+
         builder.Services.AddGrpcClient<TicketVerwaltungsService.TicketVerwaltungsServiceClient>(o =>
+        {
+            o.Address = new Uri("https://localhost:5002");
+        });
+
+        builder.Services.AddGrpcClient<MailService.MailServiceClient>(o =>
         {
             o.Address = new Uri("https://localhost:5002");
         });

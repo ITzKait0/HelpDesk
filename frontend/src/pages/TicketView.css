@@ -1,0 +1,42 @@
+.ticket-view {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.ticket-info {
+    margin-bottom: 30px;
+}
+
+.mails-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Email + Datum Block */
+.mail-item strong {
+    min-width: 180px;
+}
+
+.mail-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+/* Text */
+.mail-text {
+    flex: 1;
+    max-width: 50%;
+    white-space: normal;
+    word-break: break-word;
+}

@@ -7,14 +7,38 @@ package ticket;
 import "Grpcs/Protos/GeneralProtos.proto";
 
 service TicketVerwaltungsService{
-	rpc AddTicket(pAddTicketRequest) returns (generalProtos.pBoolReply);
+	rpc AddTicket(pAddTicketRequest) returns (pAddTicketReply);
 	rpc DeleteTicket(pDeleteTicketRequest) returns (generalProtos.pBoolReply);
+	rpc GetTicketsBySupporterId(pGetTicketsBySupporterIdRequest) returns (pGetTicketsBySupporterIdReply);
+	rpc GetTicketById(pGetTicketByIdRequest) returns (pGetTicketByIdReply);
+}
+
+message pGetTicketByIdRequest{
+	int64 id = 1;
+}
+
+message pGetTicketByIdReply{
+	generalProtos.pTicket ticket = 1;
+}
+
+message pGetTicketsBySupporterIdRequest{
+	int32 supporterId = 1;
+}
+
+message pGetTicketsBySupporterIdReply{
+	repeated generalProtos.pTicket tickets = 1;
 }
 
 message pAddTicketRequest{
 	generalProtos.pTicket ticket = 1;
 }
 
-message pDeleteTicketRequest{
-	int32 id = 1;
+message pAddTicketReply{
+	int64 id = 1;
 }
+
+message pDeleteTicketRequest{
+	int64 id = 1;
+}
+
+

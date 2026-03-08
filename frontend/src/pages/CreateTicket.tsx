@@ -1,28 +1,20 @@
 import { useState } from 'react'
-import logo from './assets/logo.png'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { addTicket } from '../API';
+import logo from '../assets/logo.png'
+import './CreateTicket.css'
 
 
-function App() {
+function CreateTicket() {
     const [status, setStatus] = useState("idle");
-    const addTicket = async (ticket)=>{
-        await fetch("http://localhost:5003/Ticket/add", {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify(ticket),
-        });
-    }
+
 
     const createTicket = async()=>{
         setStatus("pending");
-        const ticket = {name:document.getElementById("name").value,
-          firstname: document.getElementById("firstname").value,
-          email: document.getElementById("email").value,
-          topic: document.getElementById("topic").value,
-          text: document.getElementById("textfield").value};
+        const ticket = {name:(document.getElementById("name") as HTMLInputElement)?.value,
+          firstname: (document.getElementById("firstname") as HTMLInputElement)?.value,
+          email: (document.getElementById("email") as HTMLInputElement)?.value,
+          topic: (document.getElementById("topic") as HTMLInputElement)?.value,
+          text: (document.getElementById("textfield") as HTMLTextAreaElement)?.value};
           try {
             await addTicket(ticket);
             setStatus("success");
@@ -34,19 +26,19 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1" target="_blank">
+        <a target="_blank">
           <img src={logo} className="logo logo-spin" alt="logo" />
         </a>
       </div>
           <h1>F.H.P HelpDesk</h1>
-          <div class ="ticketinput">
+          <div className ="ticketinput">
               <input id="email" placeholder='E-Mail Adresse'/>
-              <div class ="name">
+              <div className ="name">
                 <input id="name" placeholder='Name'/>
                 <input id="firstname" placeholder='Vorname'/>
               </div>
               <input id="topic" placeholder='Betreff'/>
-              <textarea id="textfield" class="textfield" rows="10" placeholder='Text'/>
+              <textarea id="textfield" className="textfield" rows={10} placeholder='Text'/>
           </div>
           <div className="card">
               {status ==="pending" &&(
@@ -72,4 +64,4 @@ function App() {
   )
 }
 
-export default App
+export default CreateTicket

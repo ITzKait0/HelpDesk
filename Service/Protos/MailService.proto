@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "Service.Protos";
+
+package mail;
+
+import "Protos/GeneralProtos.proto";
+
+service MailService{
+	rpc addMail(pAddMailRequest) returns(generalProtos.pBoolReply);
+	rpc getMailsForTicketId(pGetMailsForTicketIdRequest) returns(pGetMailsForTicketIdReply);
+}
+
+message pAddMailRequest{
+	string subject = 1;
+	string from = 2;
+	string text = 3;
+	string sendDate = 4;
+}
+
+message pGetMailsForTicketIdRequest{
+	int32 ticketId = 1;
+}
+
+message pGetMailsForTicketIdReply{
+	repeated pMail mails = 1;
+}
+
+message pMail{
+	int64 id = 1;
+	int64 ticketId = 2;
+	string subject = 3;
+	string from = 4;
+	string text = 5;
+	string sendDate = 6;
+}

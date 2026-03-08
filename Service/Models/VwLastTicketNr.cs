@@ -1,7 +1,14 @@
-﻿namespace Service.Models
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+namespace Service.Models;
+
+[Keyless]
+public partial class VwLastTicketNr
 {
-    public class VwLastTicketNr
-    {
-        public long TicketNr { get; set; }
-    }
+    [Column("TicketNR")]
+    public long TicketNr { get; set; }
 }
